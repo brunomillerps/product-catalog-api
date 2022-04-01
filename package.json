@@ -1,0 +1,9 @@
+{
+  "name": "product-catalog-api",
+  "version": "1.0.0",
+  "description": "Offer a product catalog APIs",
+  "main": "src/app.ts",
+  "repository": "git@github.com:brunomillerps/product-catalog-api.git",
+  "author": "Bruno Miller",
+  "license": "MIT"
+}
