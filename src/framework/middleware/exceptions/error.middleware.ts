@@ -1,13 +1,16 @@
 import { Request, Response, NextFunction } from "express";
-import HttpException from "src/application/domain/http-exceptions";
+import { StatusCodes } from "http-status-codes";
+import ErrorException from "../../../../src/application/domain/exceptions/ErrorException";
 
 export const errorHandler = (
-    error: HttpException,
+    error: Error | TypeError | ErrorException,
     request: Request,
     response: Response,
     next: NextFunction
 ) => {
-    const status = error.statusCode || error.status || 500;
-
-    response.status(status).send(error);
+    if (error instanceof ErrorException) {
+        response.status(error.status).send(error);
+    } else {
+        response.status(500).send({ code: StatusCodes.INTERNAL_SERVER_ERROR, status: 500, message: error.message });
+    }
 };
