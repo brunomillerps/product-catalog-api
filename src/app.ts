@@ -5,7 +5,7 @@ import * as expressWinston from 'express-winston';
 import helmet from 'helmet';
 import * as winston from 'winston';
 import { errorHandler } from './framework/middleware/exceptions/error.middleware';
-import ProductRoutes from './framework/routes/Products.routes';
+import { producRouter } from './framework/routes/Products.routes';
 
 const app: express.Application = express();
 const port = process.env.PORT || 3000;
@@ -43,7 +43,7 @@ app.use('/api', rateLimiter)
 /**
  * Application Routes configuration
  */
-app.use('/api/v1/products', new ProductRoutes().routes())
+app.use('/api/v1/products', producRouter)
 
 app.get('/', (req: express.Request, res: express.Response) => {
     res.status(200).send(`Server running at http://localhost:${port}`)

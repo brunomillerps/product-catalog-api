@@ -1,12 +1,11 @@
-import express from 'express'
-import GetAllProductsController from '../controllers/GetAllProructsController'
+import { Router } from 'express'
+import { getAllProductsController } from '../controllers/getAllProdutcts'
 
-export default class ProductRoutes {
+const producRouter = Router()
 
-    routes(): express.Router {
+producRouter.get('/', (req, res, next) => {
+    return getAllProductsController.findAllProducts(req, res, next)
+})
 
-        return express.Router()
-            .get('/', new GetAllProductsController().findAllProducts)
+export { producRouter }
 
-    }
-}
