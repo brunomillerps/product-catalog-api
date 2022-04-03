@@ -37,9 +37,38 @@ It has all the needed configuration to the framework in place to operate healthi
 ### Gateway
 Contains the implementation of the abstractions determined by the use cases classes. It is also going to access external systems like databases, rest APIs, messages queue, etc.
 
+## How to run
+
+Run following steps:
+* yarn install
+* yarn dev (for development)
+* yarn start (for non stage environment)
+
 ## APIs
 
 ### Get all products
+
+**How to call**:
+```
+curl --location --request GET 'localhost:3000/api/v1/products'
+```
+**Response**
+```
+[
+    {
+        "quantity": 6,
+        "id": "bfc022a5-c239-45f5-bb35-f88023b669ce",
+        "price": "23.65",
+        "name": "Prod 00033"
+    },
+    {
+        "quantity": 5,
+        "id": "88c5db61-4501-4e38-bf8c-29a6626766e1",
+        "price": 12.34,
+        "name": "testing 123"
+    },
+]
+```
 
 ### Get one specific product
 
