@@ -46,8 +46,8 @@ Run following steps:
 
 - yarn install
 - yarn dev (for development)
-- yarn start (for non stage environment)
-
+- yarn build (to generate javascript bin)
+- yarn start (node start prod environment) __current with issues on imports paths__
 ## APIs
 
 ### Create product
@@ -108,7 +108,14 @@ curl --location --request GET 'localhost:3000/api/v1/products'
 
 ### Delete a product
 
-## Crosscut concerns
+**Request**
+```
+curl --location --request DELETE 'localhost:3000/api/v1/products/3550ed97-4922-4275-bd2e-13c04cc4d80b'
+```
+
+**Response**
+204 - No Content
+## Cross-cutting concern
 
 ### API Rate Limit
 
