@@ -1,6 +1,6 @@
+import ErrorException from "@domain/exceptions/ErrorException";
+import IDeleteProductGateway from "@usecase/DeleteProduct/IDeleteProductGateway";
 import { StatusCodes } from "http-status-codes";
-import IDeleteProductGateway from "src/application/usecase/DeleteProduct/IDeleteProductGateway";
-import ErrorException from "../../src/application/domain/exceptions/ErrorException";
 import SupplyChainClientRest from "./SupplyChainClientRest";
 
 export default class DeleteProductSupplyChainRest implements IDeleteProductGateway {

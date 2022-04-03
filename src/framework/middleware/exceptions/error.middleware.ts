@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from "express";
+import ErrorException from "@domain/exceptions/ErrorException";
+import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import ErrorException from "../../../../src/application/domain/exceptions/ErrorException";
 
 export const errorHandler = (
     error: Error | TypeError | ErrorException,

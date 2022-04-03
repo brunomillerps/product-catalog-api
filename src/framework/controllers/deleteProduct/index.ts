@@ -1,5 +1,5 @@
-import DeleteProductUseCase from "../../../../src/application/usecase/DeleteProduct/DeleteProductUseCase";
-import DeleteProductSupplyChainRest from "../../../../src/gateway/DeleteProductSupplyChainRest";
+import DeleteProductSupplyChainRest from "@gateway/DeleteProductSupplyChainRest";
+import DeleteProductUseCase from "@usecase/DeleteProduct/DeleteProductUseCase";
 import DeleteProductController from "./DeleteProductController";
 
 const deleteProductGateway = new DeleteProductSupplyChainRest()

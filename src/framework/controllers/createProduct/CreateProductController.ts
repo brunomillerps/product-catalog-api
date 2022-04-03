@@ -1,5 +1,5 @@
+import CreateProductUseCase from "@usecase/NewProduct/CreateProductUseCase"
 import { NextFunction, Request, Response } from "express"
-import CreateProductUseCase from "src/application/usecase/NewProduct/CreateProductUseCase"
 
 export default class CreateProductController {
 

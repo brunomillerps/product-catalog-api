@@ -153,5 +153,4 @@ Uses opossum as circuit braker to prevent failures propagation and fail fast
 - integration tests
 - load test
 - secure API with authentication (jwt, api-key, etc)
-- fix tsconfig-paths
 - fix circuit braker policy for https with status code 4xx

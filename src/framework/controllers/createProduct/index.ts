@@ -1,5 +1,5 @@
-import CreateProductUseCase from "../../../../src/application/usecase/NewProduct/CreateProductUseCase";
-import CreateProductSupplyChainRest from "../../../../src/gateway/CreateProductSupplyChainRes";
+import CreateProductSupplyChainRest from "@gateway/CreateProductSupplyChainRest";
+import CreateProductUseCase from "@usecase/NewProduct/CreateProductUseCase";
 import CreateProductController from "./CreateProductController";
 
 const createProductGateway = new CreateProductSupplyChainRest()

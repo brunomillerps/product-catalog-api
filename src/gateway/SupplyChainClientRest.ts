@@ -1,6 +1,6 @@
+import ProductDto from "@usecase/NewProduct/ProductDto";
 import { AxiosResponse } from "axios";
 import { ConsecutiveBreaker, IPolicy, IRetryContext, Policy } from 'cockatiel';
-import ProductDto from "src/application/usecase/NewProduct/ProductDto";
 import { Http } from "./http/axios-instance";
 
 export default class SupplyChainClientRest extends Http {

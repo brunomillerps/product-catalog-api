@@ -1,5 +1,5 @@
+import GetAllProductsUseCase from "@usecase/GetProducts/GetAllProductsUseCase"
 import { NextFunction, Request, Response } from "express"
-import GetAllProductsUseCase from "../../../application/usecase/GetProducts/GetAllProductsUseCase"
 
 export default class GetAllProductsController {
 

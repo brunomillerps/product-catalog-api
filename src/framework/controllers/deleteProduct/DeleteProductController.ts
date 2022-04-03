@@ -1,6 +1,6 @@
+import DeleteProductUseCase from "@usecase/DeleteProduct/DeleteProductUseCase"
 import { NextFunction, Request, Response } from "express"
 import { StatusCodes } from "http-status-codes"
-import DeleteProductUseCase from "src/application/usecase/DeleteProduct/DeleteProductUseCase"
 
 export default class DeleteProductController {
 
