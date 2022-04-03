@@ -26,33 +26,65 @@ This application uses Clean Architecture, and the project structure looks like t
 ```
 
 ### Application package
+
 Contains the project business rules and it should not depend on other layers around. Its inner package are:
-* **domain**: holds classes that have shared rules, are usually known as rich entity 
-* **usecase**: responsible to organize the system rules and play with abstractions to delegate outside responsibilities
+
+- **domain**: holds classes that have shared rules, are usually known as rich entity
+- **usecase**: responsible to organize the system rules and play with abstractions to delegate outside responsibilities
 
 ### Framework
 
 It has all the needed configuration to the framework in place to operate healthily
 
 ### Gateway
+
 Contains the implementation of the abstractions determined by the use cases classes. It is also going to access external systems like databases, rest APIs, messages queue, etc.
 
 ## How to run
 
 Run following steps:
-* yarn install
-* yarn dev (for development)
-* yarn start (for non stage environment)
+
+- yarn install
+- yarn dev (for development)
+- yarn start (for non stage environment)
 
 ## APIs
 
+### Create product
+
+**Request**
+
+```
+curl --location --request POST 'localhost:3000/api/v1/products' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name": "Shampoo Tipo 2",
+    "quantity": 10,
+    "price": 30
+}'
+```
+
+**Response**
+
+```
+{
+    "id": "1f556e25-8b74-4d0d-8904-b5d02d1e1973",
+    "name": "Shampoo Tipo 2",
+    "quantity": 10,
+    "price": 30
+}
+```
+
 ### Get all products
 
-**How to call**:
+**Request**:
+
 ```
 curl --location --request GET 'localhost:3000/api/v1/products'
 ```
+
 **Response**
+
 ```
 [
     {
@@ -113,4 +145,13 @@ The application use `helmet` to secure the application. They are:
 
 ### Circuit Braker
 
-Added
+Uses opossum as circuit braker to prevent failures propagation and fail fast
+
+## TODO
+
+- add Idempotency to POST, PUT, DELETE
+- integration tests
+- load test
+- secure API with authentication (jwt, api-key, etc)
+- fix tsconfig-paths
+- fix circuit braker policy for https with status code 4xx

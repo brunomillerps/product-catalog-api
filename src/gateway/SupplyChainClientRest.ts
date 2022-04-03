@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { ConsecutiveBreaker, IPolicy, IRetryContext, Policy } from 'cockatiel';
+import ProductDto from "src/application/usecase/NewProduct/ProductDto";
 import { Http } from "./http/axios-instance";
-
 
 export default class SupplyChainClientRest extends Http {
 
@@ -18,6 +18,10 @@ export default class SupplyChainClientRest extends Http {
 
         this.retryWithBreaker = Policy.wrap(retry, circuitBreaker);
 
+        this.retryWithBreaker.onFailure(({ duration, handled, reason }) => {
+            console.log(`circuit breaker call ran in ${duration}ms and failed with`, reason);
+            console.log(handled ? 'error was handled' : 'error was not handled');
+        });
     }
 
     public static getInstance(): SupplyChainClientRest {
@@ -26,7 +30,14 @@ export default class SupplyChainClientRest extends Http {
     }
 
     getAllProducts(): Promise<AxiosResponse> {
-
         return this.retryWithBreaker.execute(() => this.instance.get("/"))
+    }
+
+    createProduct(product: ProductDto): Promise<AxiosResponse> {
+        return this.retryWithBreaker.execute(() => this.instance.post("/", product))
+    }
+
+    deleteProduct(productId: string): Promise<AxiosResponse> {
+        return this.retryWithBreaker.execute(() => this.instance.delete(`/${productId}`))
     }
 }
