@@ -3,23 +3,22 @@
     "target": "es2017",
     "lib": ["ES6"],
     "module": "commonjs",
+    "outDir": "bin",
     "rootDir": "src",
     "baseUrl": ".",
     "paths": {
       "@usecase/*": ["./src/application/usecase/*"],
       "@domain/*": ["./src/application/domain/*"],
       "@gateway/*": ["./src/gateway/*"],
-      "@routes/*": ["./src/framework/routes/*" ],
+      "@routes/*": ["./src/framework/routes/*"],
       "@middleware/*": ["./src/framework/middleware/*"]
     },
-    "typeRoots": [
-      "./node_modules/@types"
-    ],
+    "typeRoots": ["./node_modules/@types"],
     "resolveJsonModule": true,
-    "outDir": "./bin",
     "inlineSourceMap": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
   },
   "include": ["src/**/*"]
 }
