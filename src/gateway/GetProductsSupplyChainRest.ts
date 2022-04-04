@@ -28,7 +28,7 @@ export default class GetProductSupplyChainRest implements IGetAllProductsGateway
             return []
 
         } catch (error) {
-            throw new ErrorException("Supply chain service is unreachable. Try again later", StatusCodes.GATEWAY_TIMEOUT, error)
+            throw new ErrorException("Supply chain service is unreachable. Try again later", StatusCodes.INTERNAL_SERVER_ERROR, error)
         }
     }
 }

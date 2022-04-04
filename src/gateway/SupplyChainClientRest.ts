@@ -6,7 +6,6 @@ import { Http } from "./http/axios-instance";
 export default class SupplyChainClientRest extends Http {
 
     private static _instance: SupplyChainClientRest
-    static SupplyChainClientRest: SupplyChainClientRest
     private retryWithBreaker: IPolicy<IRetryContext, never>
 
     private constructor() {
