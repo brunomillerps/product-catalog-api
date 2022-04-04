@@ -48,6 +48,26 @@ Run following steps:
 - yarn dev (for development)
 - yarn build (to generate javascript bin)
 - yarn start (node start prod environment) 
+
+## Code coverage
+
+Current code coverage
+
+```
+Jest: "global" coverage threshold for statements (90%) not met: 66.18%
+Jest: "global" coverage threshold for branches (90%) not met: 30.43%
+Jest: "global" coverage threshold for lines (90%) not met: 68.14%
+Jest: "global" coverage threshold for functions (90%) not met: 55.26%
+
+Test Suites: 10 passed, 10 total
+Tests:       17 passed, 17 total
+
+```
+
+Important to note that the file `src/gateway/SupplyChainClientRest.ts` needs test and, with that, the major feature of handling failures will be covered.
+
+* The estimated time to complete unit test is one work day.
+
 ## APIs
 
 ### Create product
@@ -101,11 +121,8 @@ curl --location --request GET 'localhost:3000/api/v1/products'
     },
 ]
 ```
-
-### Get one specific product
-
 ### Update a product
-
+Not implemented yet
 ### Delete a product
 
 **Request**
@@ -157,7 +174,7 @@ Uses opossum as circuit braker to prevent failures propagation and fail fast
 ## TODO
 
 - add Idempotency to POST, PUT, DELETE
-- integration tests
+- integration test with supertest
+- 100% unit test
 - load test
 - secure API with authentication (jwt, api-key, etc)
-- fix circuit braker policy for https with status code 4xx

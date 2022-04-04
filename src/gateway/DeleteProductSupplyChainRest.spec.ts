@@ -55,7 +55,7 @@ describe('DeleteProductSupplyChainRest', () => {
 
         expect(errorExpect).toBeInstanceOf(ErrorException)
         expect(errorExpect.name).toBe("ErrorException")
-        expect(errorExpect.message).toBe("Supply chain service is unreachable. Try again later")
+        expect(errorExpect.message).toBe("Unexpected error occurred. Try again later")
         expect(supplyChainClientRestMock.deleteProduct).toHaveBeenCalledTimes(1)
     });
 });
