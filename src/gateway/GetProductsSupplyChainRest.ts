@@ -7,7 +7,7 @@ import SupplyChainClientRest from "./SupplyChainClientRest";
 export default class GetProductSupplyChainRest implements IGetAllProductsGateway {
 
     constructor(private readonly client?: SupplyChainClientRest) {
-        this.client = client || SupplyChainClientRest.getInstance()
+        this.client = client || new SupplyChainClientRest()
     }
 
     async getAll(): Promise<ProductDto[]> {

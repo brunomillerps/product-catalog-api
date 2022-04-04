@@ -7,7 +7,7 @@ import SupplyChainClientRest from "./SupplyChainClientRest";
 export default class CreateProductSupplyChainRest implements ICreateProductGateway {
 
     constructor(private readonly client?: SupplyChainClientRest) {
-        this.client = client || SupplyChainClientRest.getInstance()
+        this.client = client || new SupplyChainClientRest()
     }
 
     async create(product: ProductDto): Promise<ProductDto> {
