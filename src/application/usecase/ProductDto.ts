@@ -1,6 +1,7 @@
 export default interface ProductDto {
+
+    id?: string
     quantity: number
-    id: string
     price: number
     name: string
 }

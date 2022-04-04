@@ -1,4 +1,4 @@
-import ProductDto from "@usecase/NewProduct/ProductDto";
+import ProductDto from "@usecase/ProductDto";
 import { AxiosResponse } from "axios";
 import { ConsecutiveBreaker, IPolicy, IRetryContext, Policy } from 'cockatiel';
 import { Http } from "./http/axios-instance";
@@ -14,7 +14,7 @@ export default class SupplyChainClientRest extends Http {
         super(host)
 
         const retry = Policy.handleAll().retry().attempts(3).exponential();
-        const circuitBreaker = Policy.handleAll().circuitBreaker(10 * 1000, new ConsecutiveBreaker(1));
+        const circuitBreaker = Policy.handleAll().circuitBreaker(10 * 1000, new ConsecutiveBreaker(3));
 
         this.retryWithBreaker = Policy.wrap(retry, circuitBreaker);
 

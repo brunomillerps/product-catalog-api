@@ -1,6 +1,5 @@
-import { Product } from "../../domain/product";
+import ProductDto from "@usecase/ProductDto";
 
 export default interface IGetAllProductsGateway {
-    getAll(): Promise<Product[]>
-    findOne(productId: string): Promise<Product>
+    getAll(): Promise<ProductDto[]>
 }

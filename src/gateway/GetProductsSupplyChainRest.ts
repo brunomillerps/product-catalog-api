@@ -1,6 +1,6 @@
 import ErrorException from "@domain/exceptions/ErrorException";
-import { Product } from "@domain/product";
 import IGetAllProductsGateway from "@usecase/GetProducts/IGetProductsGateway";
+import ProductDto from "@usecase/ProductDto";
 import { StatusCodes } from "http-status-codes";
 import SupplyChainClientRest from "./SupplyChainClientRest";
 
@@ -10,17 +10,25 @@ export default class GetProductSupplyChainRest implements IGetAllProductsGateway
         this.client = client || SupplyChainClientRest.getInstance()
     }
 
-    async getAll(): Promise<Product[]> {
+    async getAll(): Promise<ProductDto[]> {
         try {
             const productsResponse = await this.client.getAllProducts()
-            return productsResponse['data']['bundle'].map((i: Omit<Product, "id">) => new Product(i))
+
+            if (productsResponse['data']) {
+                return productsResponse['data']['bundle'].map(p => {
+                    return <ProductDto>{
+                        id: p['id'],
+                        name: p['name'],
+                        price: p['price'],
+                        quantity: p['quantity']
+                    }
+                })
+            }
+
+            return []
 
         } catch (error) {
             throw new ErrorException("Supply chain service is unreachable. Try again later", StatusCodes.GATEWAY_TIMEOUT, error)
         }
-    }
-
-    findOne(productId: string): Promise<Product> {
-        throw new Error("Method not implemented.");
     }
 }
