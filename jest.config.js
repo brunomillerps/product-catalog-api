@@ -18,7 +18,7 @@ module.exports = {
     },
   },
   collectCoverage: true,
-  collectCoverageFrom: ["<rootDir>/**/*.{js,ts}"],
+  collectCoverageFrom: ["<rootDir>/**/*.{js,ts}", "!<rootDir>/**/*.inject.ts"],
   coveragePathIgnorePatterns: [
     "<rootDir>/node_modules/",
     "<rootDir>/bin/",

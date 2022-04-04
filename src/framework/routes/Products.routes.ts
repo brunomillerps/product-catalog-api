@@ -1,9 +1,9 @@
 import { Router } from 'express'
 import { createValidator } from 'express-joi-validation'
 import Joi from 'joi'
-import { createProductController } from '../controllers/createProduct'
-import { deleteProductController } from '../controllers/deleteProduct'
-import { getAllProductsController } from '../controllers/getAllProdutcts'
+import { createProductController } from '../controllers/createProduct/index.inject'
+import { deleteProductController } from '../controllers/deleteProduct/index.inject'
+import { getAllProductsController } from '../controllers/getAllProdutcts/index.inject'
 
 const validator = createValidator()
   
