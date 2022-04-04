@@ -1,3 +1,4 @@
+import ErrorException from "@domain/exceptions/ErrorException";
 import ProductDto from "@usecase/ProductDto";
 import { AxiosResponse } from "axios";
 import CreateProductSupplyChainRest from "./CreateProductSupplyChainRest";
@@ -18,14 +19,14 @@ const sutFactory = () => {
 }
 
 describe('CreateProductSupplyChainRest', () => {
-    it('should call http client and returns a list of products', async () => {
+    it('should call supply chain client to create a product', async () => {
 
         // given
         const { sut, supplyChainClientRestMock } = sutFactory()
         const product: ProductDto = { name: "Product 1", price: 29, quantity: 10 }
 
         const axiosResponse: AxiosResponse = {
-            data: { ...product, id: "123" },
+            data: product,
             status: 201, statusText: "Created", headers: {}, config: {}
         }
 
@@ -35,5 +36,32 @@ describe('CreateProductSupplyChainRest', () => {
 
         expect(expectedProduct).toEqual(product)
         expect(supplyChainClientRestMock.createProduct).toHaveBeenCalledTimes(1)
+        expect(supplyChainClientRestMock.deleteProduct).toHaveBeenCalledTimes(0)
+        expect(supplyChainClientRestMock.getAllProducts).toHaveBeenCalledTimes(0)
+    });
+
+    it('should throw generic expcetion when calling supply chain client', async () => {
+
+        // given
+        const { sut, supplyChainClientRestMock } = sutFactory()
+        const product: ProductDto = { name: "Product 1", price: 29, quantity: 10 }
+
+        // when
+        supplyChainClientRestMock.createProduct.mockRejectedValue(new Error("partner server is unavailable"))
+
+        let errorExpect: Error
+        try {
+            await sut.create(product)
+        } catch (error) {
+            errorExpect = error
+        }
+
+        expect(errorExpect).toBeInstanceOf(ErrorException)
+        expect(errorExpect.name).toBe("ErrorException")
+        expect(errorExpect.message).toBe("Supply chain service is unreachable. Try again later")
+
+        expect(supplyChainClientRestMock.createProduct).toHaveBeenCalledTimes(1)
+        expect(supplyChainClientRestMock.deleteProduct).toHaveBeenCalledTimes(0)
+        expect(supplyChainClientRestMock.getAllProducts).toHaveBeenCalledTimes(0)
     });
 });
