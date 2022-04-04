@@ -4,16 +4,16 @@ import { StatusCodes } from "http-status-codes"
 
 export default class DeleteProductController {
 
-    constructor(private readonly deleteProductUsecase: DeleteProductUseCase) {}
+    constructor(private readonly deleteProductUsecase: DeleteProductUseCase) { }
 
     async handle(req: Request, res: Response, next: NextFunction) {
 
         try {
             const productId = req.params['productId']
 
-            const deleted = await this.deleteProductUsecase.execute(productId)
+            await this.deleteProductUsecase.execute(productId)
 
-            res.status(StatusCodes.NO_CONTENT).end()
+            res.sendStatus(StatusCodes.NO_CONTENT)
         } catch (error) {
             next(error)
         }
