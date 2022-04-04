@@ -1,21 +1,21 @@
 import ProductDto from "@usecase/ProductDto";
 import { AxiosResponse } from "axios";
-import { ConsecutiveBreaker, IPolicy, IRetryContext, Policy } from 'cockatiel';
+import { ConsecutiveBreaker, IDefaultPolicyContext, IPolicy, IRetryContext, Policy } from 'cockatiel';
 import { Http } from "./http/axios-instance";
 
 export default class SupplyChainClientRest extends Http {
 
     private static _instance: SupplyChainClientRest
-    private retryWithBreaker: IPolicy<IRetryContext, never>
+    private retryWithBreaker: IPolicy<IDefaultPolicyContext, never>
 
-    private constructor() {
+    static retryPolicy: IPolicy<IDefaultPolicyContext, any> = Policy.handleAll().retry().attempts(3).exponential()
+    static circuitBreakerPolicy: IPolicy<IDefaultPolicyContext, any> = Policy.handleAll().circuitBreaker(10 * 1000, new ConsecutiveBreaker(3))
+
+    private constructor(circuitBrakerPolicy?: IPolicy<IRetryContext, never>) {
         const host: string = process.env.SUPPLY_CHAIN_HOST || 'https://ev5uwiczj6.execute-api.eu-central-1.amazonaws.com/test/supply-chain'
         super(host)
 
-        const retry = Policy.handleAll().retry().attempts(3).exponential();
-        const circuitBreaker = Policy.handleAll().circuitBreaker(10 * 1000, new ConsecutiveBreaker(3));
-
-        this.retryWithBreaker = Policy.wrap(retry, circuitBreaker);
+        this.retryWithBreaker = circuitBrakerPolicy || Policy.wrap(SupplyChainClientRest.retryPolicy, SupplyChainClientRest.circuitBreakerPolicy);
 
         this.retryWithBreaker.onFailure(({ duration, handled, reason }) => {
             console.log(`circuit breaker call ran in ${duration}ms and failed with`, reason);
@@ -24,7 +24,6 @@ export default class SupplyChainClientRest extends Http {
     }
 
     public static getInstance(): SupplyChainClientRest {
-
         return this._instance || (this._instance = new this())
     }
 

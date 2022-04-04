@@ -47,7 +47,7 @@ Run following steps:
 - yarn install
 - yarn dev (for development)
 - yarn build (to generate javascript bin)
-- yarn start (node start prod environment) __current with issues on imports paths__
+- yarn start (node start prod environment) 
 ## APIs
 
 ### Create product
@@ -161,4 +161,3 @@ Uses opossum as circuit braker to prevent failures propagation and fail fast
 - load test
 - secure API with authentication (jwt, api-key, etc)
 - fix circuit braker policy for https with status code 4xx
-- figure tsc paths issues `Error: Cannot find module '../../../../src/application/usecase/GetProducts/GetAllProductsUseCase'`
