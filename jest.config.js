@@ -9,4 +9,23 @@ module.exports = {
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: "<rootDir>",
   }),
+  coverageThreshold: {
+    global: {
+      branches: 90,
+      functions: 90,
+      lines: 90,
+      statements: 90,
+    },
+  },
+  collectCoverage: true,
+  collectCoverageFrom: ["<rootDir>/**/*.{js,ts}"],
+  coveragePathIgnorePatterns: [
+    "<rootDir>/node_modules/",
+    "<rootDir>/bin/",
+    "<rootDir>/.eslintrc.js",
+    "<rootDir>/babel.config.js",
+    "<rootDir>/jest.config.js",
+    "<rootDir>/coverage/",
+    "<rootDir>/src/app.ts",
+  ],
 };

@@ -1,5 +1,5 @@
 import ErrorException from "@domain/exceptions/ErrorException";
-import ICreateProductGateway from "@usecase/NewProduct/INewProductGateway";
+import ICreateProductGateway from "@usecase/NewProduct/ICreateProductGateway";
 import ProductDto from "@usecase/ProductDto";
 import { StatusCodes } from "http-status-codes";
 import SupplyChainClientRest from "./SupplyChainClientRest";
