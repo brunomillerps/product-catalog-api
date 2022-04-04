@@ -16,7 +16,7 @@ const productSchema = Joi.object({
 const producRouter = Router()
 
 producRouter.get('/', (req, res, next) => {
-    return getAllProductsController.findAllProducts(req, res, next)
+    return getAllProductsController.handle(req, res, next)
 })
 
 producRouter.post('/', validator.body(productSchema), (req, res, next) => {

@@ -26,7 +26,7 @@ const sutFactory = () => {
 }
 
 describe('CreateProductController', () => {
-    it('should return list of products', async () => {
+    it('should create a product and return id fullfiled', async () => {
 
         // given
         const { sut, createProductUseCaseMock } = sutFactory()

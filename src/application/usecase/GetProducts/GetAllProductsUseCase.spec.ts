@@ -23,18 +23,8 @@ describe('GetAllProductsUseCase', () => {
         // given
         const { sut } = sutFactory()
         const products: ProductDto[] = [
-            {
-                name: "Product A",
-                price: 99.9,
-                quantity: 10,
-                id: uuidv4()
-            },
-            {
-                name: "Product B",
-                price: 8.1,
-                quantity: 1,
-                id: uuidv4()
-            }
+            { name: "Product A", price: 99.9, quantity: 10, id: uuidv4() },
+            { name: "Product B", price: 8.1, quantity: 1, id: uuidv4() }
         ]
 
         // when
