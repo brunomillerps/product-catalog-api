@@ -1,5 +1,5 @@
 import ProductDto from "../ProductDto";
-import ICreateProductGateway from "./INewProductGateway";
+import ICreateProductGateway from "./ICreateProductGateway";
 
 export default class CreateProductUseCase {
 

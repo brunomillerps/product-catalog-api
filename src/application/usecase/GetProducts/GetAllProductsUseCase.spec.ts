@@ -22,8 +22,6 @@ describe('GetAllProductsUseCase', () => {
 
         // given
         const { sut } = sutFactory()
-
-        // when
         const products: ProductDto[] = [
             {
                 name: "Product A",
