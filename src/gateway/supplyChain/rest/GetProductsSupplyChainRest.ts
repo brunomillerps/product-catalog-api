@@ -1,14 +1,8 @@
-import ErrorException from "@domain/exceptions/ErrorException";
 import IGetAllProductsGateway from "@usecase/GetProducts/IGetProductsGateway";
 import ProductDto from "@usecase/ProductDto";
-import { StatusCodes } from "http-status-codes";
-import SupplyChainClientRest from "./SupplyChainClientRest";
+import { SupplyChainBaseGateway } from "./SupplyChainBaseGateway";
 
-export default class GetProductSupplyChainRest implements IGetAllProductsGateway {
-
-    constructor(private readonly client?: SupplyChainClientRest) {
-        this.client = client || new SupplyChainClientRest()
-    }
+export default class GetProductSupplyChainRest extends SupplyChainBaseGateway implements IGetAllProductsGateway {
 
     async getAll(): Promise<ProductDto[]> {
         try {
@@ -28,7 +22,7 @@ export default class GetProductSupplyChainRest implements IGetAllProductsGateway
             return []
 
         } catch (error) {
-            throw new ErrorException("Supply chain service is unreachable. Try again later", StatusCodes.INTERNAL_SERVER_ERROR, error)
+            this.handleException(error)
         }
     }
 }

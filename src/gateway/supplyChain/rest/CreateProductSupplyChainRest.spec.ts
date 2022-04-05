@@ -47,7 +47,10 @@ describe('CreateProductSupplyChainRest', () => {
         const product: ProductDto = { name: "Product 1", price: 29, quantity: 10 }
 
         // when
-        supplyChainClientRestMock.createProduct.mockRejectedValue(new Error("partner server is unavailable"))
+        supplyChainClientRestMock.createProduct.mockRejectedValue({
+            response: { status: 503 },
+            message: "partner server is unavailable"
+        })
 
         let errorExpect: Error
         try {
@@ -57,7 +60,6 @@ describe('CreateProductSupplyChainRest', () => {
         }
 
         expect(errorExpect).toBeInstanceOf(ErrorException)
-        expect(errorExpect.name).toBe("ErrorException")
         expect(errorExpect.message).toBe("Supply chain service is unreachable. Try again later")
 
         expect(supplyChainClientRestMock.createProduct).toHaveBeenCalledTimes(1)

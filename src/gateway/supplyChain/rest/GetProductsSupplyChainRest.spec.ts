@@ -50,8 +50,11 @@ describe('GetProductSupplyChainRest', () => {
         const { sut, supplyChainClientRestMock } = sutFactory()
 
         // when
-        supplyChainClientRestMock.getAllProducts.mockRejectedValue(new Error("unavailable server"))
-
+        supplyChainClientRestMock.getAllProducts.mockRejectedValue({
+            response: { status: 503 },
+            message: "partner server is unavailable"
+        })
+        
         let errorExpect: Error
         try {
             await sut.getAll()
@@ -60,7 +63,6 @@ describe('GetProductSupplyChainRest', () => {
         }
 
         expect(errorExpect).toBeInstanceOf(ErrorException)
-        expect(errorExpect.name).toBe("ErrorException")
         expect(errorExpect.message).toBe("Supply chain service is unreachable. Try again later")
         expect(supplyChainClientRestMock.getAllProducts).toHaveBeenCalledTimes(1)
     });
