@@ -1,4 +1,4 @@
-
+config/*.env
 bin/
 
 # Logs
@@ -131,3 +131,7 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+src/config/development.env
+src/config/development.env
+src/config/development.env
+src/config/development.env
