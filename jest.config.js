@@ -27,5 +27,6 @@ module.exports = {
     "<rootDir>/jest.config.js",
     "<rootDir>/coverage/",
     "<rootDir>/src/app.ts",
+    "<rootDir>/src/server.ts",
   ],
 };

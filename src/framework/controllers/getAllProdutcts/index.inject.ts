@@ -1,5 +1,5 @@
-import GetAllProductsUseCase from "../../../application/usecase/GetProducts/GetAllProductsUseCase"
-import GetProductSupplyChainRest from "../../../gateway/GetProductsSupplyChainRest"
+import GetProductSupplyChainRest from "@gateway/supplyChain/rest/GetProductsSupplyChainRest"
+import GetAllProductsUseCase from "@usecase/GetProducts/GetAllProductsUseCase"
 import GetAllProductsController from "./GetAllProructsController"
 
 const getProductsGateway = new GetProductSupplyChainRest()

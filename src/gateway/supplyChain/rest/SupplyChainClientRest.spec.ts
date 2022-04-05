@@ -36,7 +36,7 @@ describe('SupplyChainClientRest', () => {
 
         // then
         expect(mockedAxios.delete).toBeCalledTimes(1)
-        expect(mockedAxios.delete).toBeCalledWith(`/${productId}`)
+        expect(mockedAxios.delete).toBeCalledWith(`/test/supply-chain/${productId}`)
     });
 
     it('should call axios POST', async () => {
@@ -49,7 +49,7 @@ describe('SupplyChainClientRest', () => {
 
         // then
         expect(mockedAxios.post).toBeCalledTimes(1)
-        expect(mockedAxios.post).toBeCalledWith('/', {} as ProductDto)
+        expect(mockedAxios.post).toBeCalledWith('/test/supply-chain', {} as ProductDto)
     });
 
     it('should retry request 3 times with default implementation', async () => {

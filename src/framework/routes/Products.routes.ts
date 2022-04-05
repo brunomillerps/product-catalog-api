@@ -6,7 +6,7 @@ import { deleteProductController } from '../controllers/deleteProduct/index.inje
 import { getAllProductsController } from '../controllers/getAllProdutcts/index.inject'
 
 const validator = createValidator()
-  
+
 const productSchema = Joi.object({
     name: Joi.string().required(),
     price: Joi.number().required(),
@@ -19,7 +19,7 @@ producRouter.get('/', (req, res, next) => {
     return getAllProductsController.handle(req, res, next)
 })
 
-producRouter.post('/', validator.body(productSchema), (req, res, next) => {
+producRouter.post('/', validator.body(productSchema, { statusCode: 422 }), (req, res, next) => {
     return createProductController.handle(req, res, next)
 })
 

@@ -1,4 +1,4 @@
-import DeleteProductSupplyChainRest from "@gateway/DeleteProductSupplyChainRest";
+import DeleteProductSupplyChainRest from "@gateway/supplyChain/rest/DeleteProductSupplyChainRest";
 import DeleteProductUseCase from "@usecase/DeleteProduct/DeleteProductUseCase";
 import DeleteProductController from "./DeleteProductController";
 

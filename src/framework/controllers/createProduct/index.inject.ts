@@ -1,4 +1,4 @@
-import CreateProductSupplyChainRest from "@gateway/CreateProductSupplyChainRest";
+import CreateProductSupplyChainRest from "@gateway/supplyChain/rest/CreateProductSupplyChainRest";
 import CreateProductUseCase from "@usecase/NewProduct/CreateProductUseCase";
 import CreateProductController from "./CreateProductController";
 

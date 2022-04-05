@@ -54,13 +54,41 @@ Run following steps:
 Current code coverage
 
 ```
-Jest: "global" coverage threshold for statements (90%) not met: 66.18%
-Jest: "global" coverage threshold for branches (90%) not met: 30.43%
-Jest: "global" coverage threshold for lines (90%) not met: 68.14%
-Jest: "global" coverage threshold for functions (90%) not met: 55.26%
+All files                              |    99.2 |      100 |     100 |   99.18 |                   
+ application/domain/exceptions         |     100 |      100 |     100 |     100 |                   
+  ErrorException.ts                    |     100 |      100 |     100 |     100 |                   
+  InvalidProductIdException.ts         |     100 |      100 |     100 |     100 |                   
+  ProductNotFound.ts                   |     100 |      100 |     100 |     100 |                   
+ application/usecase/DeleteProduct     |     100 |      100 |     100 |     100 |                   
+  DeleteProductUseCase.ts              |     100 |      100 |     100 |     100 |                   
+ application/usecase/GetProducts       |     100 |      100 |     100 |     100 |                   
+  GetAllProductsUseCase.ts             |     100 |      100 |     100 |     100 |                   
+ application/usecase/NewProduct        |     100 |      100 |     100 |     100 |                   
+  CreateProductUseCase.ts              |     100 |      100 |     100 |     100 |                   
+ framework/controllers/createProduct   |     100 |      100 |     100 |     100 |                   
+  CreateProductController.ts           |     100 |      100 |     100 |     100 |                   
+ framework/controllers/deleteProduct   |     100 |      100 |     100 |     100 |                   
+  DeleteProductController.ts           |     100 |      100 |     100 |     100 |                   
+ framework/controllers/getAllProdutcts |     100 |      100 |     100 |     100 |                   
+  GetAllProructsController.ts          |     100 |      100 |     100 |     100 |                   
+ framework/middleware/exceptions       |     100 |      100 |     100 |     100 |                   
+  error.middleware.ts                  |     100 |      100 |     100 |     100 |                   
+ framework/routes                      |     100 |      100 |     100 |     100 |                   
+  Products.routes.ts                   |     100 |      100 |     100 |     100 |                   
+ gateway/supplyChain/rest              |   98.18 |      100 |     100 |   98.07 |                   
+  CreateProductSupplyChainRest.ts      |     100 |      100 |     100 |     100 |                   
+  DeleteProductSupplyChainRest.ts      |     100 |      100 |     100 |     100 |                   
+  GetProductsSupplyChainRest.ts        |   88.88 |      100 |     100 |   88.88 | 22                
+  SupplyChainBaseGateway.ts            |     100 |      100 |     100 |     100 |                   
+  SupplyChainClientRest.ts             |     100 |      100 |     100 |     100 |                   
+---------------------------------------|---------|----------|---------|---------|-------------------
 
-Test Suites: 10 passed, 10 total
-Tests:       17 passed, 17 total
+Test Suites: 13 passed, 13 total
+Tests:       32 passed, 32 total
+Snapshots:   0 total
+Time:        13.486 s
+Ran all test suites.
+Done in 14.29s.
 
 ```
 
@@ -175,6 +203,6 @@ Uses opossum as circuit braker to prevent failures propagation and fail fast
 
 - add Idempotency to POST, PUT, DELETE
 - integration test with supertest
-- 100% unit test
+- ~100% unit test~
 - load test
 - secure API with authentication (jwt, api-key, etc)
