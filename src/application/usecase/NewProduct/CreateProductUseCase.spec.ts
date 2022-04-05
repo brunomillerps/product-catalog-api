@@ -2,13 +2,18 @@ import ProductDto from "@usecase/ProductDto"
 import { v4 as uuidv4 } from 'uuid'
 import CreateProductUseCase from "./CreateProductUseCase"
 import ICreateProductGateway from "./ICreateProductGateway"
+import ICreateProductRepository from "./ICreateProductRepository"
 
 const createProductGatewayMock: jest.Mocked<ICreateProductGateway> = {
     create: jest.fn()
 }
 
+const createProductRepositoryMock: jest.Mocked<ICreateProductRepository> = {
+    create: jest.fn()
+}
+
 const sutFactory = () => {
-    const sut = new CreateProductUseCase(createProductGatewayMock)
+    const sut = new CreateProductUseCase(createProductGatewayMock, createProductRepositoryMock)
 
     return {
         sut
@@ -31,6 +36,7 @@ describe('CreateProductUseCase', () => {
 
         // when
         createProductGatewayMock.create.mockResolvedValueOnce({ ...newProduct, id: expectedId })
+        createProductRepositoryMock.create.mockResolvedValueOnce({ ...newProduct, id: expectedId })
         const createdProduct = await sut.execute(newProduct)
 
         // then

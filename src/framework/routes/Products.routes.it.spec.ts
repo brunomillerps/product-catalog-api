@@ -16,9 +16,9 @@ describe('IT - Products API', () => {
         request = supertest.agent(server)
     })
 
-    afterAll(function (done) {
-        server.close(done)
-    })
+    // afterAll(function (done) {
+    //     server.close(done)
+    // })
 
     const basePath = '/api/v1/products'
 

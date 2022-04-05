@@ -19,6 +19,7 @@ module.exports = {
           "@domain": "./src/application/domain/",
           "@gateway": "./src/gateway/",
           "@routes": "./src/framework/routes/",
+          "@schemas": "./src/framework/schemas/",
           "@middleware": "./src/framework/middleware/",
         },
       },

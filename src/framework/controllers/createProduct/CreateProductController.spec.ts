@@ -1,6 +1,7 @@
 import ErrorException from "@domain/exceptions/ErrorException";
 import CreateProductUseCase from "@usecase/NewProduct/CreateProductUseCase";
 import ICreateProductGateway from "@usecase/NewProduct/ICreateProductGateway";
+import ICreateProductRepository from "@usecase/NewProduct/ICreateProductRepository";
 import ProductDto from "@usecase/ProductDto";
 import { NextFunction, Request, Response } from 'express';
 import { v4 as uuiv4 } from 'uuid';
@@ -15,8 +16,13 @@ const createProductGatewayMock: jest.Mocked<ICreateProductGateway> = {
     create: jest.fn()
 }
 
+
+const createProductRepositoryMock: jest.Mocked<ICreateProductRepository> = {
+    create: jest.fn()
+}
+
 const sutFactory = () => {
-    const createProductUseCaseMock = new CreateProductUseCaseMock(createProductGatewayMock) as jest.Mocked<CreateProductUseCase>
+    const createProductUseCaseMock = new CreateProductUseCaseMock(createProductGatewayMock, createProductRepositoryMock) as jest.Mocked<CreateProductUseCase>
     const sut = new CreateProductController(createProductUseCaseMock)
 
     return {
