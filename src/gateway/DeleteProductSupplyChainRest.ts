@@ -19,25 +19,22 @@ export default class DeleteProductSupplyChainRest implements IDeleteProductGatew
 
         } catch (error) {
 
-            // axios doesn't throw a typed Error
-            if (error instanceof Error) {
-                if (error['response']) {
-                    switch (error['response']['status']) {
-                        case 400:
-                            throw new ErrorException(error['message'], StatusCodes.BAD_REQUEST)
-                        case 404:
-                            throw new ProductNotFoundException(productId)
-                        default:
-                            throw new ErrorException("Supply chain service is unreachable. Try again later", StatusCodes.SERVICE_UNAVAILABLE)
-                    }
-                }
-            }
-
             if (error instanceof BrokenCircuitError) {
                 throw new ErrorException("Supply chain service is unreachable. Try again later", StatusCodes.SERVICE_UNAVAILABLE)
             }
-            
-            throw new ErrorException("Unexpected error occurred. Try again later", StatusCodes.INTERNAL_SERVER_ERROR)
+
+            // axios doesn't throw a typed Error
+            if (error['response']) {
+                switch (error['response']['status']) {
+                    case 400:
+                        throw new ErrorException(error['message'], StatusCodes.BAD_REQUEST)
+                    case 404:
+                        throw new ProductNotFoundException(productId)
+                    default:
+                        throw new ErrorException("Supply chain service is unreachable. Try again later", StatusCodes.SERVICE_UNAVAILABLE)
+                }
+            }
+            throw error
         }
     }
 }

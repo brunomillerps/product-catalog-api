@@ -1,5 +1,7 @@
 import ErrorException from "@domain/exceptions/ErrorException";
+import { ProductNotFoundException } from "@domain/exceptions/ProductNotFound";
 import { AxiosResponse } from "axios";
+import { BrokenCircuitError } from "cockatiel";
 import DeleteProductSupplyChainRest from "./DeleteProductSupplyChainRest";
 import SupplyChainClientRest from "./SupplyChainClientRest";
 
@@ -38,24 +40,30 @@ describe('DeleteProductSupplyChainRest', () => {
         expect(supplyChainClientRestMock.getAllProducts).toHaveBeenCalledTimes(0)
     });
 
-    it('should throw expcetion when calling supply chain client DELETE', async () => {
+    [
+        { message: 'Any business error', expectedInstanceOf: ErrorException, error: { response: { status: 400 } } },
+        { message: 'Not Found', expectedInstanceOf: ProductNotFoundException, error: { response: { status: 404 } } },
+        { message: 'Server is unavailable', expectedInstanceOf: ErrorException, error: { response: { status: 500 } } },
+        { message: 'Circuit is open', expectedInstanceOf: ErrorException, error: new BrokenCircuitError() },
+        { message: 'General exception', expectedInstanceOf: Error, error: new Error("Error 503") },
+    ].forEach((err) => {
+        it(`should throw expcetion "${err.message}" when calling supply chain client DELETE`, async () => {
+            // given
+            const { sut, supplyChainClientRestMock } = sutFactory()
 
-        // given
-        const { sut, supplyChainClientRestMock } = sutFactory()
+            // when
+            supplyChainClientRestMock.deleteProduct.mockRejectedValue(err.error)
 
-        // when
-        supplyChainClientRestMock.deleteProduct.mockRejectedValue(new Error("unavailable server"))
+            let errorExpect: Error
+            try {
+                await sut.delete("111")
+            } catch (error) {
+                errorExpect = error
+            }
 
-        let errorExpect: Error
-        try {
-            await sut.delete("111")
-        } catch (error) {
-            errorExpect = error
-        }
-
-        expect(errorExpect).toBeInstanceOf(ErrorException)
-        expect(errorExpect.name).toBe("ErrorException")
-        expect(errorExpect.message).toBe("Unexpected error occurred. Try again later")
-        expect(supplyChainClientRestMock.deleteProduct).toHaveBeenCalledTimes(1)
-    });
+            // then
+            expect(supplyChainClientRestMock.deleteProduct).toHaveBeenCalledTimes(1)
+            expect(errorExpect).toBeInstanceOf(err.expectedInstanceOf)
+        });
+    })
 });

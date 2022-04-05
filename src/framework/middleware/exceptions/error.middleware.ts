@@ -11,6 +11,6 @@ export const errorHandler = (
     if (error instanceof ErrorException) {
         response.status(error.status).send(error);
     } else {
-        response.status(500).send({ code: StatusCodes.INTERNAL_SERVER_ERROR, status: 500, message: error.message });
+        response.status(500).send({ code: StatusCodes.INTERNAL_SERVER_ERROR, status: 500, message: 'Unexpected error occurred. Try again later' });
     }
 };
