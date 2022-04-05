@@ -40,6 +40,7 @@
     "@babel/node": "^7.16.8",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
+    "@shelf/jest-mongodb": "^2.2.1",
     "@types/cors": "^2.8.12",
     "@types/debug": "^4.1.7",
     "@types/jest": "^27.4.1",
