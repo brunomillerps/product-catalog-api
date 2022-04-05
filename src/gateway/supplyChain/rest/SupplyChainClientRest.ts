@@ -1,11 +1,10 @@
 import ProductDto from "@usecase/ProductDto";
-import { AxiosResponse } from "axios";
-import { ConsecutiveBreaker, IDefaultPolicyContext, IPolicy, IRetryContext, Policy } from 'cockatiel';
-import { Http } from "../../http/axios-instance";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
+import { ConsecutiveBreaker, IDefaultPolicyContext, IPolicy, Policy } from 'cockatiel';
 
-export default class SupplyChainClientRest extends Http {
+export default class SupplyChainClientRest {
 
-    private static retryWithBreaker: IPolicy<IDefaultPolicyContext, never>
+    retryWithBreaker: IPolicy<IDefaultPolicyContext, never>
 
     static retryPolicy: IPolicy<IDefaultPolicyContext, any> =
         Policy
@@ -16,33 +15,29 @@ export default class SupplyChainClientRest extends Http {
         Policy
             .handleType(Error, e => e.message.startsWith('Request failed with status code 5'))
             // 5 seconds to recovery
-            .circuitBreaker(5 * 1000, new ConsecutiveBreaker(1))
+            .circuitBreaker(5 * 1000, new ConsecutiveBreaker(4))
 
-    constructor(circuitBrakerPolicy?: IPolicy<IRetryContext, never>) {
-        const host: string = process.env.SUPPLY_CHAIN_HOST || 'https://ev5uwiczj6.execute-api.eu-central-1.amazonaws.com/test/supply-chain'
-        super(host)
+    constructor(private readonly instance?: AxiosInstance, circuitBrakerPolicy?: IPolicy<IDefaultPolicyContext, never>) {
 
-        SupplyChainClientRest.retryWithBreaker = circuitBrakerPolicy || Policy.wrap(SupplyChainClientRest.retryPolicy, SupplyChainClientRest.circuitBreakerPolicy);
+        this.instance = instance || axios.create({ baseURL: process.env.SUPPLY_CHAIN_HOST || 'https://ev5uwiczj6.execute-api.eu-central-1.amazonaws.com/test/supply-chain' })
 
-        SupplyChainClientRest.retryWithBreaker.onFailure(({ duration, handled, reason }) => {
+        this.retryWithBreaker = circuitBrakerPolicy || Policy.wrap(SupplyChainClientRest.retryPolicy, SupplyChainClientRest.circuitBreakerPolicy);
+
+        this.retryWithBreaker.onFailure(({ duration, handled, reason }) => {
             console.log(`circuit breaker call ran in ${duration}ms and failed with`, reason);
             console.log(handled ? 'error was handled' : 'error was not handled');
-        })
-
-        SupplyChainClientRest.retryWithBreaker.onFailure(error => {
-            console.log(error)
         })
     }
 
     getAllProducts(): Promise<AxiosResponse> {
-        return SupplyChainClientRest.retryWithBreaker.execute(() => this.instance.get("/"))
+        return this.retryWithBreaker.execute(() => this.instance.get("/"))
     }
 
     createProduct(product: ProductDto): Promise<AxiosResponse> {
-        return SupplyChainClientRest.retryWithBreaker.execute(() => this.instance.post("/", product))
+        return this.retryWithBreaker.execute(() => this.instance.post("/", product))
     }
 
     deleteProduct(productId: string): Promise<AxiosResponse> {
-        return SupplyChainClientRest.retryWithBreaker.execute(() => this.instance.delete(`/${productId}`))
+        return this.retryWithBreaker.execute(() => this.instance.delete(`/${productId}`))
     }
 }
