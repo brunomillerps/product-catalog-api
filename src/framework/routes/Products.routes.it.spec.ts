@@ -1,24 +1,41 @@
 import ProductDto from '@usecase/ProductDto';
 import { Server } from 'http';
 import { StatusCodes } from 'http-status-codes';
+import mongoose from "mongoose";
 import nock from 'nock';
 import supertest, { Response, SuperAgentTest } from 'supertest';
 import { v4 as uuidv4 } from 'uuid';
 import { app } from '../../../src/app';
 
+
 describe('IT - Products API', () => {
+
+    beforeAll(async () => {
+        if (!process.env.MONGO_URL) {
+            throw new Error('MongoDB server not initialized')
+        }
+
+        await mongoose.connect(process.env.MONGO_URL)
+
+    });
+
+    afterAll((done) => {
+        mongoose.connection.close(done)
+    })
+
     let request: SuperAgentTest = null
     let server: Server
     const scope: nock.Scope = nock('https://ev5uwiczj6.execute-api.eu-central-1.amazonaws.com')
 
     beforeAll(function (done) {
         server = app.listen(done)
+
         request = supertest.agent(server)
     })
 
-    // afterAll(function (done) {
-    //     server.close(done)
-    // })
+    afterAll(function (done) {
+        server.close(done)
+    })
 
     const basePath = '/api/v1/products'
 

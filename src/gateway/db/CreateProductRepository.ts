@@ -14,7 +14,6 @@ export default class CreateProductMongoDbRepository implements ICreateProductRep
         return newProduct.save().then((it) => {
             return <ProductDto>{
                 id: it.id,
-                supplyChainId: it.supplyChainId,
                 name: it.name,
                 price: it.price,
                 quantity: it.quantity
