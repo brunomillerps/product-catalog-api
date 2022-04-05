@@ -17,6 +17,7 @@ module.exports = {
       statements: 90,
     },
   },
+  setupFiles: ["dotenv/config"],
   collectCoverage: true,
   collectCoverageFrom: ["<rootDir>/**/*.{js,ts}", "!<rootDir>/**/*.inject.ts"],
   coveragePathIgnorePatterns: [

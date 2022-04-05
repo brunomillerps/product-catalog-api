@@ -19,7 +19,7 @@ export default class SupplyChainClientRest {
 
     constructor(private readonly instance?: AxiosInstance, circuitBrakerPolicy?: IPolicy<IDefaultPolicyContext, never>) {
 
-        this.instance = instance || axios.create({ baseURL: "https://ev5uwiczj6.execute-api.eu-central-1.amazonaws.com" })
+        this.instance = instance || axios.create({ baseURL: process.env.SUPPLY_CHAIN_HOST })
 
         this.retryWithBreaker = circuitBrakerPolicy || Policy.wrap(SupplyChainClientRest.retryPolicy, SupplyChainClientRest.circuitBreakerPolicy);
 
@@ -30,14 +30,14 @@ export default class SupplyChainClientRest {
     }
 
     getAllProducts(): Promise<AxiosResponse> {
-        return this.retryWithBreaker.execute(() => this.instance.get("/test/supply-chain"))
+        return this.retryWithBreaker.execute(() => this.instance.get(process.env.SUPPLY_CHAIN_BASE_PATH))
     }
 
     createProduct(product: ProductDto): Promise<AxiosResponse> {
-        return this.retryWithBreaker.execute(() => this.instance.post("/test/supply-chain", product))
+        return this.retryWithBreaker.execute(() => this.instance.post(process.env.SUPPLY_CHAIN_BASE_PATH, product))
     }
 
     deleteProduct(productId: string): Promise<AxiosResponse> {
-        return this.retryWithBreaker.execute(() => this.instance.delete(`/test/supply-chain/${productId}`))
+        return this.retryWithBreaker.execute(() => this.instance.delete(`${process.env.SUPPLY_CHAIN_BASE_PATH}/${productId}`))
     }
 }

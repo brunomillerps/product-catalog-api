@@ -8,9 +8,9 @@
   "license": "MIT",
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir bin --copy-files --no-copy-ignored",
-    "start": "node bin/server.js",
-    "dev": "tsnd -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify ./src/server.ts",
-    "test": "jest"
+    "start": "NODE_ENV=production node -r dotenv/config bin/server.js dotenv_config_path=src/config/production.env",
+    "dev": "NODE_ENV=development tsnd -r dotenv/config -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify ./src/server.ts dotenv_config_path=src/config/development.env",
+    "test": "DOTENV_CONFIG_PATH=./src/config/test.env jest"
   },
   "dependencies": {
     "@types/axios": "^0.14.0",
@@ -30,6 +30,7 @@
     "helmet": "^5.0.2",
     "http-status-codes": "^2.2.0",
     "joi": "^17.6.0",
+    "mongoose": "^6.2.10",
     "uuid": "^8.3.2",
     "winston": "^3.6.0"
   },
@@ -42,17 +43,18 @@
     "@types/cors": "^2.8.12",
     "@types/debug": "^4.1.7",
     "@types/jest": "^27.4.1",
+    "@types/mongoose": "^5.11.97",
     "@types/supertest": "^2.0.12",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "babel-plugin-module-resolver": "^4.1.0",
     "eslint": "^7.12.1",
-    "nock": "^13.2.4",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "jest": "^27.5.1",
+    "nock": "^13.2.4",
     "source-map-support": "^0.5.21",
     "supertest": "^6.2.2",
     "ts-jest": "^27.1.4",
