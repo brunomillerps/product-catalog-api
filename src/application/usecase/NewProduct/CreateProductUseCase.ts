@@ -12,6 +12,13 @@ export default class CreateProductUseCase {
     async execute(product: ProductDto): Promise<ProductDto> {
 
         const externalProduct = await this.createProductGateway.create(product)
-        return await this.createProductRepository.create({ ...externalProduct, supplyChainId: externalProduct.id })
+        const result = await this.createProductRepository.create({ ...externalProduct, supplyChainId: externalProduct.id })
+
+        return <ProductDto>{
+            id: result.id,
+            name: result.name,
+            price: result.price,
+            quantity: result.quantity
+        }
     }
 }

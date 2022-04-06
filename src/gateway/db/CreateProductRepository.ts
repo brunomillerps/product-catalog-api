@@ -5,19 +5,19 @@ import ProductDto from "@usecase/ProductDto";
 
 export default class CreateProductMongoDbRepository implements ICreateProductRepository {
 
-    create(product: ProductDto): Promise<ProductDto> {
+    async create(product: ProductDto): Promise<ProductDto> {
 
         const newProduct = new Product({ ...product })
         newProduct.supplyChainId = product.id
 
-        // when
-        return newProduct.save().then((it) => {
-            return <ProductDto>{
-                id: it.id,
-                name: it.name,
-                price: it.price,
-                quantity: it.quantity
-            }
-        })
+        const it = await newProduct.save();
+
+        return <ProductDto>{
+            id: it.id,
+            name: it.name,
+            price: it.price,
+            quantity: it.quantity,
+            supplyChainId: it.supplyChainId
+        };
     }
 }
