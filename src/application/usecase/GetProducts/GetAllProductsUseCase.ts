@@ -18,7 +18,7 @@ export default class GetAllProductsUseCase {
             let result: ProductDto[] = []
             // decide which response is from db or service
             if (a[0] && a[0]['supplyChainId']) {
-                // update the from supply chain server for the ID from our db
+                // update the id from supply chain server for the ID from our db
                 b.forEach((el) => {
                     const found = a.find(p => p.supplyChainId === el.id)
                     el.id = found?.id || el.id
@@ -30,7 +30,7 @@ export default class GetAllProductsUseCase {
                     const found = b.find(p => p.supplyChainId === el.id)
                     el.id = found?.id || el.id
                 })
-                result = a
+                result = a || b
             }
 
             return result
