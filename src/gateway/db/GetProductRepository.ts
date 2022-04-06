@@ -6,8 +6,8 @@ import ProductDto from "@usecase/ProductDto";
 export default class GetProductMongoDbRepository implements IGetProductsRepository {
 
     async get(productId: string): Promise<ProductDto> {
-        const item = await Product.find({ id: productId }).exec()
-        return JSON.parse(JSON.stringify(item))[0] as ProductDto
+        const item = await Product.findOne({ id: productId }).exec()
+        return JSON.parse(JSON.stringify(item)) as ProductDto
     }
 
     async getAll(): Promise<ProductDto[]> {
