@@ -18,7 +18,7 @@ describe('IT - CreateProductMongoDbRepository', () => {
         mongoose.connection.close(done)
     })
 
-    it('should persist a product to database', async () => {
+    it('should get a list of products in the database', async () => {
         // given
         const productId = uuidv4()
         const newproduct = {
@@ -38,5 +38,27 @@ describe('IT - CreateProductMongoDbRepository', () => {
         expect(savedProduct[0].name).toBe(newproduct.name)
         expect(savedProduct[0].price).toBe(newproduct.price)
         expect(savedProduct[0].quantity).toBe(newproduct.quantity)
+    });
+    
+    it('should get one product in the database', async () => {
+        // given
+        const productId = uuidv4()
+        const newproduct = {
+            id: productId, supplyChainId: productId, name: "Product name", price: 10.98, quantity: 100
+        }
+
+        const product = new Product(newproduct)
+
+        // when
+        await product.save()
+
+        // then
+        const savedProduct = await new GetProductMongoDbRepository().get(productId)
+
+        expect(savedProduct).not.toBeFalsy()
+        expect(savedProduct.id).toBe(productId)
+        expect(savedProduct.name).toBe(newproduct.name)
+        expect(savedProduct.price).toBe(newproduct.price)
+        expect(savedProduct.quantity).toBe(newproduct.quantity)
     });
 });
