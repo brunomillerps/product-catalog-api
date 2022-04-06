@@ -8,21 +8,36 @@ This application uses Clean Architecture, and the project structure looks like t
 
 ```
 .
-├── bin
+├── README.md
+├── babel.config.js
+├── jest.config.js
+├── package.json
 ├── src
 │   ├── app.ts
 │   ├── application
 │   │   ├── domain
+│   │   │   └── exceptions
 │   │   └── usecase
+│   │       ├── DeleteProduct
+│   │       ├── GetProducts
+│   │       ├── NewProduct
+│   │       ├── ProductDto.ts
+│   │       └── UpdateProducts
 │   ├── framework
 │   │   ├── controllers
+│   │   │   ├── createProduct
+│   │   │   ├── deleteProduct
+│   │   │   └── getAllProdutcts
 │   │   ├── middleware
+│   │   │   └── exceptions
 │   │   └── routes
-│   └── gateway
-│       ├── GetProductsSupplyChainRest.ts
-│       ├── SupplyChainClientRest.ts
-│       └── http
-.
+│   │       ├── Products.routes.it.spec.ts
+│   │       └── Products.routes.ts
+│   ├── gateway
+│   │   └── supplyChain
+│   │       └── rest
+│   └── server.ts
+└── tsconfig
 ```
 
 ### Application package
@@ -47,40 +62,40 @@ Run following steps:
 - yarn install
 - yarn dev (for development)
 - yarn build (to generate javascript bin)
-- yarn start (node start prod environment) 
+- yarn start (node start prod environment)
 
 ## Code coverage
 
 Current code coverage
 
 ```
-All files                              |    99.2 |      100 |     100 |   99.18 |                   
- application/domain/exceptions         |     100 |      100 |     100 |     100 |                   
-  ErrorException.ts                    |     100 |      100 |     100 |     100 |                   
-  InvalidProductIdException.ts         |     100 |      100 |     100 |     100 |                   
-  ProductNotFound.ts                   |     100 |      100 |     100 |     100 |                   
- application/usecase/DeleteProduct     |     100 |      100 |     100 |     100 |                   
-  DeleteProductUseCase.ts              |     100 |      100 |     100 |     100 |                   
- application/usecase/GetProducts       |     100 |      100 |     100 |     100 |                   
-  GetAllProductsUseCase.ts             |     100 |      100 |     100 |     100 |                   
- application/usecase/NewProduct        |     100 |      100 |     100 |     100 |                   
-  CreateProductUseCase.ts              |     100 |      100 |     100 |     100 |                   
- framework/controllers/createProduct   |     100 |      100 |     100 |     100 |                   
-  CreateProductController.ts           |     100 |      100 |     100 |     100 |                   
- framework/controllers/deleteProduct   |     100 |      100 |     100 |     100 |                   
-  DeleteProductController.ts           |     100 |      100 |     100 |     100 |                   
- framework/controllers/getAllProdutcts |     100 |      100 |     100 |     100 |                   
-  GetAllProructsController.ts          |     100 |      100 |     100 |     100 |                   
- framework/middleware/exceptions       |     100 |      100 |     100 |     100 |                   
-  error.middleware.ts                  |     100 |      100 |     100 |     100 |                   
- framework/routes                      |     100 |      100 |     100 |     100 |                   
-  Products.routes.ts                   |     100 |      100 |     100 |     100 |                   
- gateway/supplyChain/rest              |   98.18 |      100 |     100 |   98.07 |                   
-  CreateProductSupplyChainRest.ts      |     100 |      100 |     100 |     100 |                   
-  DeleteProductSupplyChainRest.ts      |     100 |      100 |     100 |     100 |                   
-  GetProductsSupplyChainRest.ts        |   88.88 |      100 |     100 |   88.88 | 22                
-  SupplyChainBaseGateway.ts            |     100 |      100 |     100 |     100 |                   
-  SupplyChainClientRest.ts             |     100 |      100 |     100 |     100 |                   
+All files                              |    99.2 |      100 |     100 |   99.18 |
+ application/domain/exceptions         |     100 |      100 |     100 |     100 |
+  ErrorException.ts                    |     100 |      100 |     100 |     100 |
+  InvalidProductIdException.ts         |     100 |      100 |     100 |     100 |
+  ProductNotFound.ts                   |     100 |      100 |     100 |     100 |
+ application/usecase/DeleteProduct     |     100 |      100 |     100 |     100 |
+  DeleteProductUseCase.ts              |     100 |      100 |     100 |     100 |
+ application/usecase/GetProducts       |     100 |      100 |     100 |     100 |
+  GetAllProductsUseCase.ts             |     100 |      100 |     100 |     100 |
+ application/usecase/NewProduct        |     100 |      100 |     100 |     100 |
+  CreateProductUseCase.ts              |     100 |      100 |     100 |     100 |
+ framework/controllers/createProduct   |     100 |      100 |     100 |     100 |
+  CreateProductController.ts           |     100 |      100 |     100 |     100 |
+ framework/controllers/deleteProduct   |     100 |      100 |     100 |     100 |
+  DeleteProductController.ts           |     100 |      100 |     100 |     100 |
+ framework/controllers/getAllProdutcts |     100 |      100 |     100 |     100 |
+  GetAllProructsController.ts          |     100 |      100 |     100 |     100 |
+ framework/middleware/exceptions       |     100 |      100 |     100 |     100 |
+  error.middleware.ts                  |     100 |      100 |     100 |     100 |
+ framework/routes                      |     100 |      100 |     100 |     100 |
+  Products.routes.ts                   |     100 |      100 |     100 |     100 |
+ gateway/supplyChain/rest              |   98.18 |      100 |     100 |   98.07 |
+  CreateProductSupplyChainRest.ts      |     100 |      100 |     100 |     100 |
+  DeleteProductSupplyChainRest.ts      |     100 |      100 |     100 |     100 |
+  GetProductsSupplyChainRest.ts        |   88.88 |      100 |     100 |   88.88 | 22
+  SupplyChainBaseGateway.ts            |     100 |      100 |     100 |     100 |
+  SupplyChainClientRest.ts             |     100 |      100 |     100 |     100 |
 ---------------------------------------|---------|----------|---------|---------|-------------------
 
 Test Suites: 13 passed, 13 total
@@ -94,7 +109,7 @@ Done in 14.29s.
 
 Important to note that the file `src/gateway/SupplyChainClientRest.ts` needs test and, with that, the major feature of handling failures will be covered.
 
-* The estimated time to complete unit test is one work day.
+- The estimated time to complete unit test is one work day.
 
 ## APIs
 
@@ -149,17 +164,35 @@ curl --location --request GET 'localhost:3000/api/v1/products'
     },
 ]
 ```
+
 ### Update a product
+
 Not implemented yet
+
+As the mock server has no PUT API
+I would have to recreate the resource to simulate an update, because it doesn't accept the ID in the body of POST (create resource) nor create a new one, because that will cause new ID.
+
+To accomplish this API, will need:
+
+- Keep a unique ID in database, and return it to user
+- Everey product creation, call the service API and then save to database the server id. Here we have a relation IDs
+- Gel all should return either product persisted or not in database. Also, exchange the IDs
+- Delete api deletes both server mock and database
+- Update will only update the product name?! Possible risk of cold data.
+
+A branch `feature/mongodb` contains database implementations to keep a new and unchaged ID, missing rules in usecases
+
 ### Delete a product
 
 **Request**
+
 ```
 curl --location --request DELETE 'localhost:3000/api/v1/products/3550ed97-4922-4275-bd2e-13c04cc4d80b'
 ```
 
 **Response**
 204 - No Content
+
 ## Cross-cutting concern
 
 ### API Rate Limit
@@ -202,7 +235,7 @@ Uses opossum as circuit braker to prevent failures propagation and fail fast
 ## TODO
 
 - add Idempotency to POST, PUT, DELETE
-- integration test with supertest
+- ~integration test with supertest~
 - ~100% unit test~
 - load test
 - secure API with authentication (jwt, api-key, etc)
